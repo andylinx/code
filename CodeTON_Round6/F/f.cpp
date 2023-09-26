@@ -1,11 +1,12 @@
 #include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
-const int maxn = 42;
+const int maxn = 4002;
 ll n, k, lp[maxn], rp[maxn];
 int tp;
 ll check(ll mid, int cs)
 {
+	// cerr << mid << " ";
 	cs = 1;
 	while (mid > rp[cs]) cs++;
 	ll res = 1 - mid;
@@ -13,13 +14,15 @@ ll check(ll mid, int cs)
 
 	// cerr << cs << " ";
 	for (int i = cs - 1 ; i >= 1; i--)
-		now *= k, res += (mid / now - lp[i]) + 1;
+		now *= k, res += mid / now - lp[i] + 1;
 	// cerr << res << " ";
 	now = 1;
 	for (int i = cs ; i <= tp; i++) {
 		res += min((__int128)n, (__int128)mid * now - 1) - lp[i] + 1, now *= k;
+		// ans += min((i128)x * mul - 1, (i128)n) - L[i] + 1,
 		// cerr << mid * now - 1 << endl;
 	}
+	// cerr << endl;
 	return res;
 }
 int main()
@@ -34,7 +37,7 @@ int main()
 			continue;
 		}
 		ll now = 1;
-		tp = 1;
+		tp = 0;
 		__int128 l = 1, r;
 		for (; l <= n; l = r + 1) {
 			r = l * k - 1;
@@ -55,8 +58,9 @@ int main()
 				if (check(mid, i) >= 0) {
 					ansl = mid;
 					r = mid - 1;
+				} else {
+					l = mid + 1;
 				}
-				l = mid + 1;
 			}
 			l = lp[i], r = rp[i];
 			while (l <= r) {
@@ -64,8 +68,9 @@ int main()
 				if (check(mid, i) > 0) {
 					ansr = mid;
 					r = mid - 1;
+				} else {
+					l = mid + 1;
 				}
-				l = mid + 1;
 			}
 			// cerr << ansl << " " << ansr << endl;
 			ans += ansr - ansl;

@@ -17,6 +17,7 @@ ll L[N], R[N];
 
 ll get(ll x)
 {
+	cerr << x << " ";
 	int cur = 1;
 
 	while (x > R[cur])
@@ -27,7 +28,9 @@ ll get(ll x)
 	R(i, cur - 1, 1) {
 		mul *= k, ans += x / mul - L[i] + 1;
 	}
+	cerr << ans << " ";
 	mul = 1;
+	cerr << endl;
 	L(i, cur, top)
 	ans += min((i128)x * mul - 1, (i128)n) - L[i] + 1, mul *= k;
 	return ans;
@@ -50,7 +53,7 @@ void Main()
 		L[top] = l;
 		R[top] = r;
 	}
-
+	// for (int i = 1; i <= top; i++) printf("%lld %lld\n", L[i], R[i]);
 	ll ans = 0;
 	L(i, 1, top) {
 		ll ansl = R[i] + 1, ansr = R[i] + 1;
@@ -76,6 +79,7 @@ void Main()
 			}
 		}
 
+		// cerr << ansl << " " << ansr << endl;
 		ans += ansr - ansl;
 	}
 	cout << ans << '\n';
