@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <iostream>
+#include <bits/stdc++.h>
 #include <math.h>
 using namespace std;
 
@@ -48,7 +49,6 @@ void scan()
 	for (int i = 2; i < top; ++i)
 		ans[++ans[0]] = Q[i];
 }
-
 int main()
 {
 	//freopen("fc.in","r",stdin);

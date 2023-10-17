@@ -5,6 +5,7 @@
 #include <iostream>
 #include <fstream>
 #include <cstdio>
+#include<string.h>
 #include <cmath>
 #include <string>
 #include <vector>
@@ -19,7 +20,7 @@ using std::pair;
 const double PI = acos(-1);
 const double eps = 1e-7;
 
-SimpleGraph G;
+SimpleGraph G,ans;
 int n, m;       // represent number of nodes and edges
 int Time;       // user can define the running time of the program
 time_t st;
@@ -65,12 +66,11 @@ int count_intersection(SimpleGraph A) // count the number of intersection of a g
 		}
 	return ans / 2;
 }
-bool evaluate_graph(SimpleGraph A, SimpleGraph B) // we define a graph better than the other when it has less intersections
+bool evaluate_graph(SimpleGraph &A, SimpleGraph &B) // we define a graph better than the other when it has less intersections
 {
 	int intersect_of_A = count_intersection(A);
-	int intersect_of_B = count_intersection(B);
-
-	return intersect_of_A <= intersect_of_B;
+    int intersect_of_B = count_intersection(B);
+    return intersect_of_A <= intersect_of_B;
 }
 
 // transfer a string to an integer
@@ -253,15 +253,15 @@ void change_position()// change the position of each point according to dx,dy
 {
 	double mnx = 1e18, mny = 1e18, mxx = -1e18;
 
-	for (int i = 0; i < n; i++) {
-		if (is_tree && i == root_of_tree) continue;
-		G.nodes[i].x += dx[i], G.nodes[i].y += dy[i];
-		mnx = min(mnx, G.nodes[i].x);
-		mny = min(mny, G.nodes[i].y);
-		mxx = max(mxx, G.nodes[i].x);
-	}
-	if (is_tree)
-		G.nodes[root_of_tree].x = 0, G.nodes[root_of_tree].y = mny - 1;
+    for (int i = 0; i < n; i++) {
+        if (is_tree && i == root_of_tree) continue;
+        G.nodes[i].x += dx[i], G.nodes[i].y += dy[i];
+        mnx = min(mnx, G.nodes[i].x);
+        mny = min(mny, G.nodes[i].y);
+        mxx = max(mxx, G.nodes[i].x);
+    }
+    if (is_tree)
+        G.nodes[root_of_tree].x = 0, G.nodes[root_of_tree].y = mny - 1;
 	return;
 }
 void solve_as_tree() // treat the graph as a tree
@@ -297,32 +297,38 @@ int main()
 		compute_forces();
 		change_position();
 		print(G);
-	}
-	SimpleGraph ans;
-	ans.edges = G.edges;
-	ans.nodes = G.nodes;
-	int T = 3;
+    }
+    return 0;
+    //cerr<<count_intersection(G);
+    //std::memcpy(&ans,&G,sizeof(G));
+    int T = 3;
 	while (T--) {
-		init_location_random();
-		while (difftime(time(NULL), lst) < 1.0 * Time / 3) { // check if there is time remain
+        init_location_random();
+        while (difftime(time(NULL), lst) < 1.0 * Time) { // check if there is time remain
 			compute_forces();
-			change_position();
-			print(G);
-		}
-		if (!evaluate_graph(G, ans))
-			ans.nodes = G.nodes;
-		lst = time(NULL);
-		print(G);
-	}
-	cout << "The final graph was printed on the screen! \nAttention:the effect may get better if you give it more time to run~" << endl;
-	print(ans);
-	return 0;
+            change_position();
+            print(G);
+        }
+        if (evaluate_graph(G, ans))
+        {
+            //cerr<<count_intersection(ans)<<" "<<count_intersection(G)<<endl;
+            //std::memcpy(&ans,&G,sizeof(G));
+        }
+        lst = time(NULL);
+        print(G);
+    }
+    cout << "The final graph was printed on the screen! \nAttention:the effect may get better if you give it more time to run~" << endl;
+    print(ans);
+    return 0;
 }
 
 /*
  *  some optimizations were added:
  *      1.treat tree specially : pick the root of the tree at top of the graph
  *      2.random 3 times and compare the graph by counting the intersects of the segments
+ *      • DO NOT make copies of your SimpleGraph. It will mess up the graphics and
+          give you a whole mess of problems. You should have one copy that is passed
+          in as a parameter everywhere
  *      3.add replusive forces between two edges (which turns out to be not so effective)
  *      4.add inertia for fear that nodes move back and force
  *
