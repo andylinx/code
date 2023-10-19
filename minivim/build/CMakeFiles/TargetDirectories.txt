@@ -1,0 +1,3 @@
+/mnt/d/code/minivim/build/CMakeFiles/rebuild_cache.dir
+/mnt/d/code/minivim/build/CMakeFiles/edit_cache.dir
+/mnt/d/code/minivim/build/CMakeFiles/test1.dir

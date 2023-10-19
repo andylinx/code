@@ -186,7 +186,7 @@ void init_location_random()
 //two parameters that determines the amount of forces
 const double Kr = 0.001;
 const double Ka = 0.001;
-const double Kd = 0.02;
+const double Kd = 0.06;
 vector <double> dx, dy; // represent the amount of movment of each point in x,y axis
 
 double sqr(double _x)
@@ -214,21 +214,21 @@ void compute_forces() // compute the forces of each node
 			double x1 = G.nodes[j].x, y1 = G.nodes[j].y;
 			double theta = atan2(y1 - y0, x1 - x0), dist2 = sqr(y1 - y0) + sqr(x1 - x0);
 			double Fa = Ka * dist2;
-			dx[i] += Fa * cos(theta); dy[i] += Fa * sin(theta);
-			dx[j] -= Fa * cos(theta); dy[j] -= Fa * sin(theta);
+            dx[i] += Fa * cos(theta); dy[i] += Fa * sin(theta);
+            dx[j] -= Fa * cos(theta); dy[j] -= Fa * sin(theta);
 		}
 	// we also add repulsion between edges so that we can have a better visual effect
 
-	for (int i = 0; i < m; i++)
-		for (int j = i + 1; j < m; j++) {
-			Edge ei = G.edges[i], ej = G.edges[j];
-			double x0 = (G.nodes[ei.start].x + G.nodes[ei.end].x) / 2, y0 = (G.nodes[ei.start].y + G.nodes[ei.end].y) / 2;
-			double x1 = (G.nodes[ej.start].x + G.nodes[ej.end].x) / 2, y1 = (G.nodes[ej.start].y + G.nodes[ej.end].y) / 2;
-			double theta = atan2(y1 - y0, x1 - x0), dist2 = sqr(y1 - y0) + sqr(x1 - x0);
-			double Fr = 0.02 * Kr / sqrt(dist2);
-			//dx[i] -= Fr * cos(theta); dy[i] -= Fr * sin(theta);
-			//dx[j] += Fr * cos(theta); dy[j] += Fr * sin(theta);
-		}
+    // for (int i = 0; i < m; i++)
+        //for (int j = i + 1; j < m; j++) {
+            //Edge ei = G.edges[i], ej = G.edges[j];
+            //double x0 = (G.nodes[ei.start].x + G.nodes[ei.end].x) / 2, y0 = (G.nodes[ei.start].y + G.nodes[ei.end].y) / 2;
+            //double x1 = (G.nodes[ej.start].x + G.nodes[ej.end].x) / 2, y1 = (G.nodes[ej.start].y + G.nodes[ej.end].y) / 2;
+            //double theta = atan2(y1 - y0, x1 - x0), dist2 = sqr(y1 - y0) + sqr(x1 - x0);
+            //double Fr = 0.02 * Kr / sqrt(dist2);
+            //dx[i] -= Fr * cos(theta); dy[i] -= Fr * sin(theta);
+            //dx[j] += Fr * cos(theta); dy[j] += Fr * sin(theta);
+        //}
 }
 // compute some val and find the best root of the tree
 int root_of_tree, nowmn;
