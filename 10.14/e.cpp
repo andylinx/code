@@ -2,6 +2,11 @@
 using namespace std;
 int main()
 {
-	scanf("%d")
+	string ss = "";
+	char c = 'A';
+
+	ss += c;
+	cout << ss;
+	// printf("%s", ss);
 	return 0;
 }

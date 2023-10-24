@@ -1,9 +1,14 @@
-#include "ncurses.cpp"
+#include <ncurses.h>
+WINDOW *win;
+#include "window.cpp"
 #include "normal.cpp"
 #include "insert.cpp"
 #include "command.cpp"
-#include <bits/stdc++.h>
+
 int mode_type, exit_flag;
+int nowline, maxline, stline;
+vector <string> text;
+pair <int, int> cursor_pos;
 int main()
 {
 	init_window();

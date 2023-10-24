@@ -46,7 +46,7 @@ struct point {
 	}
 	bool operator ==(const point &oth) const
 	{
-		return !sgn(x - oth.x) && !sgn(y - oth.y);
+		return (!sgn(x - oth.x)) && (!sgn(y - oth.y));
 	}
 };
 struct Hplane {
@@ -59,7 +59,7 @@ struct Hplane {
 	{
 		ang = atan2(_d.y, _d.x);
 	}
-	bool operator <(Hplane &oth) const
+	bool operator <(Hplane &oth)
 	{
 		return ang < oth.ang;
 	}
@@ -98,7 +98,7 @@ vector <point> HPI(Hplane *L, int n)
 	}
 	while (st < ed && !onleft(q[st], p[ed - 1])) ed--;
 	if (ed - st <= 1) return ans;
-	p[ed] = intersect(q[st], q[ed]);
+	p[ed] = intersect(q[ed], q[st]);
 	for (int i = st; i <= ed; i++) ans.push_back(p[i]);
 	return ans;
 }
@@ -114,6 +114,7 @@ bool check(double mid)
 {
 	for (int i = 0; i < n; i++) {
 		tmp[i].d = b[i].d;
+		tmp[i].ang = b[i].ang;
 		tmp[i].p = b[i].p + Normal(b[i].d) * mid;
 	}
 	return HPI(tmp, n).size() > 0;
@@ -121,8 +122,10 @@ bool check(double mid)
 int main()
 {
 	freopen("a.in", "r", stdin);
-	while (scanf("%d", &n) && n) {
-		for (int i = 0; i < n; i++) scanf("%lf%lf", &a[i].x, &a[i].y);
+	while (1) {
+		cin >> n;
+		if (n == 0) break;
+		for (int i = 0; i < n; i++) cin >> a[i].x >> a[i].y;
 		for (int i = 0; i < n; i++) b[i] = { a[i], a[(i + 1) % n] - a[i] };
 		double l = 0, r = 20000.0;
 		while (r - l > eps) {
@@ -130,7 +133,7 @@ int main()
 			if (check(mid)) l = mid;
 			else r = mid;
 		}
-		printf("%.6lf\n", l);
+		printf("%.6f\n", l);
 	}
 	return 0;
 }

@@ -1,0 +1,1 @@
+/usr/bin/c++     CMakeFiles/11.dir/src/main.cpp.o  -o ../bin/11  -lcurses 

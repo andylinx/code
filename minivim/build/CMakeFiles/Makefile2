@@ -53,7 +53,7 @@ CMAKE_BINARY_DIR = /mnt/d/code/minivim/build
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/test1.dir/all
+all: CMakeFiles/minivim.dir/all
 
 .PHONY : all
 
@@ -63,36 +63,36 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/test1.dir/clean
+clean: CMakeFiles/minivim.dir/clean
 
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/test1.dir
+# Target rules for target CMakeFiles/minivim.dir
 
 # All Build rule for target.
-CMakeFiles/test1.dir/all:
-	$(MAKE) -f CMakeFiles/test1.dir/build.make CMakeFiles/test1.dir/depend
-	$(MAKE) -f CMakeFiles/test1.dir/build.make CMakeFiles/test1.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/mnt/d/code/minivim/build/CMakeFiles --progress-num=1,2 "Built target test1"
-.PHONY : CMakeFiles/test1.dir/all
+CMakeFiles/minivim.dir/all:
+	$(MAKE) -f CMakeFiles/minivim.dir/build.make CMakeFiles/minivim.dir/depend
+	$(MAKE) -f CMakeFiles/minivim.dir/build.make CMakeFiles/minivim.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/mnt/d/code/minivim/build/CMakeFiles --progress-num=1,2 "Built target minivim"
+.PHONY : CMakeFiles/minivim.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/test1.dir/rule: cmake_check_build_system
+CMakeFiles/minivim.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/d/code/minivim/build/CMakeFiles 2
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/test1.dir/all
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/minivim.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/d/code/minivim/build/CMakeFiles 0
-.PHONY : CMakeFiles/test1.dir/rule
+.PHONY : CMakeFiles/minivim.dir/rule
 
 # Convenience name for target.
-test1: CMakeFiles/test1.dir/rule
+minivim: CMakeFiles/minivim.dir/rule
 
-.PHONY : test1
+.PHONY : minivim
 
 # clean rule for target.
-CMakeFiles/test1.dir/clean:
-	$(MAKE) -f CMakeFiles/test1.dir/build.make CMakeFiles/test1.dir/clean
-.PHONY : CMakeFiles/test1.dir/clean
+CMakeFiles/minivim.dir/clean:
+	$(MAKE) -f CMakeFiles/minivim.dir/build.make CMakeFiles/minivim.dir/clean
+.PHONY : CMakeFiles/minivim.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

@@ -1,5 +1,4 @@
-extern int mode_type, exit_flag;
-extern WINDOW *win;
+#include "virable.h"
 void command_mode()
 {
 }

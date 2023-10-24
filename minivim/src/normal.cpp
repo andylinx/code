@@ -1,4 +1,5 @@
-extern int mode_type, exit_flag;
+#include "virable.h"
+
 void normal_state()
 {
 	char cc = getch();

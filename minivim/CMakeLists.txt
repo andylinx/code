@@ -2,7 +2,7 @@
 cmake_minimum_required(VERSION 3.10)
 
 # include a project name
-project(minivim_Version_test1)
+project(minivim_Version_1)
 
 # set C++ Version & executable output path
 # set(CMAKE_CXX_STANDARD 17)
@@ -23,7 +23,7 @@ set(MY_SOURCES
 
 # specify an executable, 
 # build from the specified source files
-add_executable(test1 ${MY_SOURCES})
+add_executable(minivim ${MY_SOURCES})
 
 # link ncurses library with your executable
-target_link_libraries(test1 ${CURSES_LIBRARY})
+target_link_libraries(minivim ${CURSES_LIBRARY})
