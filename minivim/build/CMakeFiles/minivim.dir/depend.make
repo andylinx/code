@@ -4,7 +4,9 @@
 CMakeFiles/minivim.dir/src/main.cpp.o: ../include/virable.h
 CMakeFiles/minivim.dir/src/main.cpp.o: ../src/command.cpp
 CMakeFiles/minivim.dir/src/main.cpp.o: ../src/insert.cpp
+CMakeFiles/minivim.dir/src/main.cpp.o: ../src/iofile.cpp
 CMakeFiles/minivim.dir/src/main.cpp.o: ../src/main.cpp
+CMakeFiles/minivim.dir/src/main.cpp.o: ../src/move_cursor.cpp
 CMakeFiles/minivim.dir/src/main.cpp.o: ../src/normal.cpp
 CMakeFiles/minivim.dir/src/main.cpp.o: ../src/window.cpp
 
