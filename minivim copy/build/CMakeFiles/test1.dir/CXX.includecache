@@ -1,0 +1,40 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../include/virable.h
+bits/stdc++.h
+-
+
+/mnt/d/code/minivim/src/command.cpp
+virable.h
+/mnt/d/code/minivim/src/virable.h
+
+/mnt/d/code/minivim/src/insert.cpp
+virable.h
+/mnt/d/code/minivim/src/virable.h
+
+/mnt/d/code/minivim/src/main.cpp
+ncurses.h
+-
+window.cpp
+/mnt/d/code/minivim/src/window.cpp
+normal.cpp
+/mnt/d/code/minivim/src/normal.cpp
+insert.cpp
+/mnt/d/code/minivim/src/insert.cpp
+command.cpp
+/mnt/d/code/minivim/src/command.cpp
+
+/mnt/d/code/minivim/src/normal.cpp
+virable.h
+/mnt/d/code/minivim/src/virable.h
+
+/mnt/d/code/minivim/src/window.cpp
+virable.h
+/mnt/d/code/minivim/src/virable.h
+

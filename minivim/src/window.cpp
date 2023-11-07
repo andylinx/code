@@ -1,69 +1,74 @@
 #include "virable.h"
 #define REG_COLOR_NUM 1
 #define CUS_COLOR_NUM 2
+void print(int type = 1)
+{
+	for (int i = 0; i <= mx.x; i++) {
+		wmove(line_num, i, 0);
+		wdelch(line_num); wdelch(line_num);
+	}
+	for (int i = 1; i <= mx.x + 1; i++) {
+		wmove(line_num, i - 1, 0);
+		if (st.x + i < 10) wprintw(line_num, "%c", ' ');
+		if (st.x + i < 100) wprintw(line_num, "%c", ' ');
+		wprintw(line_num, "%d", st.x + i);
+	}
+	wrefresh(line_num);
+	wmove(win, 0, 0);
+	for (int i = 0; i <= mx.x; i++)
+		wdeleteln(win);
+	for (int i = 0; i < min(mx.x + 1, (int)text.size() - st.x); i++) {
+		wmove(win, i, 0);
+		int cnt = 0;
+		for (int j = st.y; j < text[st.x + i].length(); j++) {
+			wprintw(win, "%c", text[st.x + i][j]);
+			cnt++;
+			if (cnt == mx.y) break;
+		}
+		wrefresh(win);
+	}
+	wmove(win, cur.x, cur.y);
+	wmove(info, 0, 0);
+	wdeleteln(info);
+	now = st + cur;
+	wprintw(info, "LINE:%d COL:%d", now.x, now.y);
+	wrefresh(info);
+	wrefresh(win);
+	if (type) lst = st + cur;
+}
 
 void init_window()
 {
 	initscr();
 	raw();
 	noecho();
+	mx = { LINES - 2, COLS - 5 };
 	keypad(stdscr, true);
 	start_color();
 	wbkgd(stdscr, COLOR_PAIR(REG_COLOR_NUM));
 	wrefresh(stdscr);
-	maxline = 10;
-	if (LINES < maxline + 2) {
-		endwin();
-		return;
-	}
-	int color1 = 1, color2 = 2;
+	int color1 = 1, color2 = 2, color3 = 3;
 	start_color();
-// init color pair
 	init_pair(color1, COLOR_WHITE, COLOR_BLACK);
 	init_pair(color2, COLOR_BLUE, COLOR_YELLOW);
-	win = newwin(maxline, COLS, 0, 0);
+	init_pair(color3, COLOR_MAGENTA, COLOR_BLACK);
+	win = newwin(mx.x, mx.y + 1, 0, 4);
 	keypad(win, true);
 	wbkgd(win, COLOR_PAIR(color1));
 	wmove(win, 0, 0);
-	cursor_pos = { 0, 0 };
 	wrefresh(win);
-	info = newwin(1, COLS, maxline, 0);
+	info = newwin(1, mx.y + 1, mx.x, 3);
 	wbkgd(info, COLOR_PAIR(color2));
 	wmove(info, 0, 0);
 	wrefresh(info);
-	command = newwin(1, COLS, maxline + 1, 0);
+	command = newwin(1, mx.y + 1, mx.x + 1, 3);
 	wbkgd(command, COLOR_PAIR(color1));
 	wmove(command, 0, 0);
 	wrefresh(command);
-	if (text.size()) {
-		for (int i = 0; i < min(maxline, (int)text.size()); i++)
-			wmove(win, i, 0), wprintw(win, "%s", text[i].c_str());
-		wmove(win, 0, 0);
-	}
-	wrefresh(win);
+	line_num = newwin(mx.x, 4, 0, 0);
+	wbkgd(line_num, COLOR_PAIR(color3));
+	wrefresh(line_num);
+	mx.x--;
+	print();
 	return;
-}
-void print_screen()
-{
-	wclear(win);
-	for (int i = 0; i < maxline; i++) {
-		wmove(win, i, 0);
-		for (int j = rowdelta; j < text[stline + i].length(); j++)
-			wprintw(win, "%c", text[stline + i][j]);
-	}
-	wrefresh(win);
-}
-void move_upward_a_line()
-{
-	wmove(win, 0, 0);
-	wdeleteln(win);
-	wmove(win, maxline - 1, 0);
-	wrefresh(win);
-}
-void move_downward_a_line()
-{
-	for (int i = 0; i < maxline; i++) wmove(win, 0, 0), wdeleteln(win);
-	for (int i = 0; i < min(maxline, (int)text.size() - stline); i++)
-		wmove(win, i, 0), wprintw(win, "%s", text[stline + i].c_str());
-	wrefresh(win);
 }

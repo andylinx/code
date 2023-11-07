@@ -1,9 +1,10 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <cstdio>
+#include <vector>
 using std::pair;
 using std::string;
 using std::vector;
 using std::min;
-extern int mode_type, exit_flag;
-extern int nowline, maxline, stline, rowdelta;
+extern int mode_type, exit_flag, changed, read_only, tranc_flag;
 extern vector <string> text;
-extern pair <int, int> cursor_pos;
+extern string File_name;

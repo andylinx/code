@@ -6,8 +6,32 @@
 
 #IncludeRegexTransform: 
 
+../include/trie.h
+memory
+-
+string
+-
+vector
+-
+deque
+-
+map
+-
+iterator
+-
+iostream
+-
+utility
+-
+type_traits
+-
+
 ../include/virable.h
-bits/stdc++.h
+iostream
+-
+cstdio
+-
+vector
 -
 
 /mnt/d/code/minivim/src/command.cpp
@@ -17,6 +41,8 @@ virable.h
 /mnt/d/code/minivim/src/insert.cpp
 virable.h
 /mnt/d/code/minivim/src/virable.h
+trie.h
+-
 
 /mnt/d/code/minivim/src/iofile.cpp
 virable.h
@@ -35,10 +61,10 @@ normal.cpp
 /mnt/d/code/minivim/src/normal.cpp
 insert.cpp
 /mnt/d/code/minivim/src/insert.cpp
-command.cpp
-/mnt/d/code/minivim/src/command.cpp
 iofile.cpp
 /mnt/d/code/minivim/src/iofile.cpp
+command.cpp
+/mnt/d/code/minivim/src/command.cpp
 
 /mnt/d/code/minivim/src/move_cursor.cpp
 
