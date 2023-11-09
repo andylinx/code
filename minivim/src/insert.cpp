@@ -2,7 +2,7 @@
 #include <trie.h>
 using Lexicon = trie::trie_map<char, trie::SetCounter>;
 Lexicon Dic;
-void init_word_completion()
+void init_word_completion() // initialize the word completion
 {
 	std::ifstream words;
 
@@ -19,10 +19,10 @@ void insert_mode()
 	while (cc != 27) {
 		changed = 1;
 		if (cc >= 2 && cc <= 5) {
-			move(cc); // only move the cursor
+			move(cc);       // only move the cursor
 		} else {
-			now = st + cur;
-			if (cc == 7) {
+			now = st + cur; // calculate the position of the absolute position in the text
+			if (cc == 7) {  // erase the last character of the current cursor position
 				if (now.y) {
 					text[now.x].erase(text[now.x].begin() + now.y - 1);
 					if (!cur.y) st.y--, print();
@@ -44,7 +44,7 @@ void insert_mode()
 				cc = getch();
 				continue;
 			}
-			if (cc == '\n') {
+			if (cc == '\n') { // pay attention to the scenario when the cursor is in the middle of a line
 				text.push_back("");
 				for (int i = text.size() - 1; i > now.x + 1; i--)
 					text[i] = text[i - 1];
@@ -130,7 +130,7 @@ void insert_mode()
 					cc = getch();
 					continue;
 				}
-				if (cc == '\t') {
+				if (cc == '\t') { // if you want to interpret tab as 4 spaces, you should type it twice
 					text[now.x].insert(now.y, 4, ' ');
 					now.y += 4;
 					cur.y = min(mx.y, now.y);
@@ -147,5 +147,6 @@ void insert_mode()
 		cc = getch();
 	}
 	if (cc == 27) mode_type = 0;
+	print();
 	return;
 }

@@ -1,7 +1,7 @@
 #include "virable.h"
 #define REG_COLOR_NUM 1
 #define CUS_COLOR_NUM 2
-void print(int type = 1)
+void print(int type = 1) // we refresh the whole screen after every operation, including the infomation window
 {
 	for (int i = 0; i <= mx.x; i++) {
 		wmove(line_num, i, 0);
@@ -31,13 +31,30 @@ void print(int type = 1)
 	wmove(info, 0, 0);
 	wdeleteln(info);
 	now = st + cur;
-	wprintw(info, "LINE:%d COL:%d", now.x, now.y);
+	wprintw(info, "LINE:%d COL:%d", now.x + 1, now.y);
+	wmove(info, 0, 45);
+	if (mode_type == 0)
+		wprintw(info, "~Normal Mode~");
+	if (mode_type == 1)
+		wprintw(info, "~Insert Mode~");
+	if (mode_type == 2)
+		wprintw(info, "~Command Mode~");
+	string name_of_file;
+	int stpos;
+	for (stpos = File_name.length() - 1; stpos > 0; stpos--)
+		if (File_name[stpos] == '/' || File_name[stpos] == '\\') {
+			stpos++;
+			break;
+		}
+	name_of_file = File_name.substr(stpos, File_name.length() - stpos);
+	wmove(info, 0, mx.y - name_of_file.length() - 1);
+	wprintw(info, "%s", name_of_file.c_str());
 	wrefresh(info);
 	wrefresh(win);
 	if (type) lst = st + cur;
 }
 
-void init_window()
+void init_window() // we set the size of the window as big as we can
 {
 	initscr();
 	raw();

@@ -1,6 +1,8 @@
 void move(char cc)
 {
-	//move the cursor
+	// pay sepcial attention to the first line and the last line
+	// pay special attention to the first column and the last column
+	// move the cursor
 	now = st + cur;
 	if (cc == 2) {                  //down
 		if (now.x == text.size() - 1) return;

@@ -35,6 +35,13 @@ void command_mode()
 				com = command_history[now_command_id];
 				wrefresh(command);
 			}
+			if (now_command_id == command_history.size() - 1) { // recover the blank command line
+				wdeleteln(command);
+				wmove(command, 0, 0);
+				wprintw(command, "%c", ':');
+				com = "";
+				wrefresh(command);
+			}
 			cc = getch();
 			continue;
 		}
@@ -42,7 +49,7 @@ void command_mode()
 		else wmove(command, 0, com.size()), wdelch(command);
 		wrefresh(command);
 		if (cc == 7) {
-			if (com.size()) com.erase(com.end() - 1);
+			if (com.size()) com.erase(com.end() - 1); // we support the delete function in the command mode
 		} else {
 			com += cc;
 		}
@@ -56,6 +63,7 @@ void command_mode()
 		return;
 	}
 	command_history.push_back(com);
+	// once a command with ! occurs, the read-only mode will disappear
 	if (com == "w") {
 		if (read_only) {
 			wdeleteln(command);

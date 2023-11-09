@@ -59,6 +59,7 @@ int main(int argc, char *argv[])
 			insert_mode();
 		if (mode_type == 2)
 			command_mode();
+		print();
 		wclear(command);
 	}
 	endwin();

@@ -11,6 +11,7 @@ void normal_state()
 			move(cc);
 		if (cc == 'O') {
 			cur.y = 0;
+			st.y = 0;
 			print();
 		}
 		if (cc == '$') {
@@ -20,34 +21,6 @@ void normal_state()
 			print();
 		}
 		if (cc == 'w') {
-			int flag = 0;
-			for (int i = now.y - 1; i >= 0; i--) {
-				if (text[now.x][i] == ' ') flag = -1;
-				if (flag == -1 && text[now.x][i] != ' ') {
-					flag = i;
-					break;
-				}
-			}
-			if (flag > 0) {
-				now.y = flag + 1;
-				cur.y = min(mx.y, now.y);
-				st.y = max(0, now.y - cur.y);
-				print();
-			} else {
-				if (!now.x) {
-					cur.y = 0;
-				} else {
-					now.y = text[now.x - 1].length();
-					now.x--;
-					cur.y = min(mx.y, now.y);
-					st.y = max(0, now.y - cur.y);
-					if (!cur.x) st.x--;
-					else cur.x--;
-				}
-				print();
-			}
-		}
-		if (cc == 'b') {
 			int flag = 0;
 			for (int i = now.y; i < text[now.x].length(); i++) {
 				if (text[now.x][i] == ' ') flag = -1;
@@ -75,6 +48,31 @@ void normal_state()
 				print();
 			}
 		}
+		if (cc == 'b') {
+			int flag = 0;
+			if (!now.y) {
+				if (!now.x) {
+					cc = getch();
+					continue;
+				}
+				if (now.x) {
+					now.x--, now.y = text[now.x].length();
+					if (!cur.x) st.x--;
+					else cur.x--;
+				}
+			}
+			for (int i = now.y - 1; i > 0; i--) {
+				if (text[now.x][i] != ' ' && text[now.x][i - 1] == ' ') {
+					flag = i;
+					break;
+				}
+			}
+
+			now.y = flag;
+			cur.y = min(mx.y, now.y);
+			st.y = max(0, now.y - cur.y);
+			print();
+		}
 		if (cc == 'd') {
 			if (!flag) {
 				flag = 1;
@@ -92,5 +90,6 @@ void normal_state()
 	if (cc == 'i') mode_type = 1;
 	if (cc == 27) exit_flag = 1;
 	if (cc == ':') mode_type = 2;
+	print();
 	return;
 }
