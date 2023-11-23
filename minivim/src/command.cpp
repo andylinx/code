@@ -130,11 +130,19 @@ void command_mode()
 		wdeleteln(command);
 		wrefresh(command);
 		int num = 0;
-		for (int i = 4; i < com.size(); i++) num = num * 10 + com[i] - '0';
-		st.x = num - 1;
-		st.x = max(st.x, 0);
-		cur.x = cur.y = 0;
-		print();
+		int sign = 1;
+		if (com[4] == '-') sign = -1;
+		for (int i = 4; i < com.size(); i++) if (com[i] >= '0' && com[i] <= '9') num = num * 10 + com[i] - '0';
+		if (sign == 1 && num >= 1 && num <= text.size()) {
+			st.x = num - 1;
+			st.x = max(st.x, 0);
+			cur.x = cur.y = 0;
+			print();
+		} else {
+			wdeleteln(command);
+			wprintw(command, "%s", "Line number out of bound.");
+			wrefresh(command);
+		}
 		return;
 	}
 	command_history.erase(command_history.end() - 1);

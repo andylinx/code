@@ -4,9 +4,12 @@ using Lexicon = trie::trie_map<char, trie::SetCounter>;
 Lexicon Dic;
 void init_word_completion() // initialize the word completion
 {
-	std::ifstream words;
-
-	words.open("words_alpha.txt");
+	std::ifstream words("words_alpha.txt");
+	if(!words.is_open()) 
+	{
+		endwin();
+		throw std::runtime_error("???");
+	}
 	string ss;
 	while (getline(words, ss))
 		Dic.insert(ss);

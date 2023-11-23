@@ -69,20 +69,27 @@ void init_window() // we set the size of the window as big as we can
 	init_pair(color1, COLOR_WHITE, COLOR_BLACK);
 	init_pair(color2, COLOR_BLUE, COLOR_YELLOW);
 	init_pair(color3, COLOR_MAGENTA, COLOR_BLACK);
-	win = newwin(mx.x, mx.y + 1, 0, 4);
+	int digit_num = 0, tmp = text.size();
+	while (tmp) {
+		digit_num++;
+		tmp /= 10;
+	}
+	int width = std::max(3, digit_num);
+	mx.y = COLS - 2 - width;
+	win = newwin(mx.x, mx.y + 1, 0, 1 + width);
 	keypad(win, true);
 	wbkgd(win, COLOR_PAIR(color1));
 	wmove(win, 0, 0);
 	wrefresh(win);
-	info = newwin(1, mx.y + 1, mx.x, 3);
+	info = newwin(1, mx.y + 1, mx.x, width);
 	wbkgd(info, COLOR_PAIR(color2));
 	wmove(info, 0, 0);
 	wrefresh(info);
-	command = newwin(1, mx.y + 1, mx.x + 1, 3);
+	command = newwin(1, mx.y + 1, mx.x + 1, width);
 	wbkgd(command, COLOR_PAIR(color1));
 	wmove(command, 0, 0);
 	wrefresh(command);
-	line_num = newwin(mx.x, 4, 0, 0);
+	line_num = newwin(mx.x, width + 1, 0, 0);
 	wbkgd(line_num, COLOR_PAIR(color3));
 	wrefresh(line_num);
 	mx.x--;

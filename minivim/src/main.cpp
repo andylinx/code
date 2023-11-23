@@ -30,6 +30,10 @@ int main(int argc, char *argv[])
 {
 	mode_type = 0;
 	// 0 normal 1 insert 2 command
+	if (argc == 1) {
+		std::cout << "Please input a file name~" << std::endl;
+		return 0;
+	}
 	if (argc >= 2) {
 		if (argc >= 3) {
 			if (argv[1][1] == 't')

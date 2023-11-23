@@ -9,7 +9,7 @@ void normal_state()
 		changed = 1;
 		if (cc >= 2 && cc <= 5)
 			move(cc);
-		if (cc == 'O') {
+		if (cc == '0') {
 			cur.y = 0;
 			st.y = 0;
 			print();
@@ -22,11 +22,13 @@ void normal_state()
 		}
 		if (cc == 'w') {
 			int flag = 0;
-			for (int i = now.y; i < text[now.x].length(); i++) {
-				if (text[now.x][i] == ' ') flag = -1;
-				if (flag == -1 && text[now.x][i] != ' ') {
-					flag = i;
-					break;
+			if (text.size()) {
+				for (int i = now.y; i < text[now.x].length(); i++) {
+					if (text[now.x][i] == ' ') flag = -1;
+					if (flag == -1 && text[now.x][i] != ' ') {
+						flag = i;
+						break;
+					}
 				}
 			}
 			if (flag > 0) {
@@ -40,10 +42,12 @@ void normal_state()
 					cur.y = min(mx.y, now.y);
 					st.y = max(0, now.y - cur.y);
 				} else {
-					now.x++;
-					if (cur.x == mx.x) st.x++;
-					else cur.x++;
-					cur.y = 0;
+					if (now.x < text.size()) {
+						now.x++;
+						if (cur.x == mx.x) st.x++;
+						else cur.x++;
+						cur.y = 0;
+					}
 				}
 				print();
 			}
@@ -80,6 +84,11 @@ void normal_state()
 				flag = 0;
 				now = st + cur;
 				text.erase(text.begin() + now.x);
+				cur.y = st.y = 0;
+				if (now.x == text.size()) {
+					if (!cur.x) st.x--;
+					else cur.x--;
+				}
 				print();
 			}
 		} else {
