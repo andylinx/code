@@ -22,15 +22,18 @@ private:
     }
 public:
     SharedPtr():_p(nullptr),cnt(new int(0)){}
-    SharedPtr(T *_ptr):_p(_ptr),cnt(new int(1)){}
+    SharedPtr(T *_ptr){
+        _p=_ptr;
+        if(_p) cnt=new int(1);
+        else cnt=new int(0);
+    }
     ~SharedPtr(){
         // std::cerr<<(cnt)<<std::endl;
         del();
     }
     SharedPtr (const SharedPtr & oth){
-        cnt=oth.cnt;
-        _p=oth._p;
-        (*cnt)++;
+        if(oth._p) _p=oth._p,cnt=oth.cnt,(*cnt)++;
+        else _p=nullptr,cnt=new int(0);
     }
     SharedPtr& operator = (const SharedPtr & oth){
         if(_p==oth._p) return *this;
@@ -38,7 +41,8 @@ public:
         else delete cnt;
         _p=oth._p;
         cnt=oth.cnt;
-        ++(*cnt);
+        if(_p) ++(*cnt);
+        else cnt=new int(0);
         return *this;
     }
     T& operator * (){
@@ -66,7 +70,9 @@ public:
             return;
         }
         del();
-        _p = _ptr; cnt=new int(1);
+        _p = _ptr; 
+        if(_ptr) cnt=new int(1);
+        else cnt=new int(0);
     }
     int use_count(){
         return *cnt;
@@ -78,10 +84,11 @@ T* make_shared(A && ... a){
 }
 int main()
 { 
-    SharedPtr <int> tmp;
-    tmp.reset(new int(40));
-    tmp.reset();
-    SharedPtr <int> temp=make_shared <int>(200);
-    temp.reset(new int(10));
+    SharedPtr <int> tmp,temp(nullptr);
+    tmp=temp;
+    SharedPtr <int> ss(tmp);
+    tmp.reset(new int(10));
+    SharedPtr <int> Temp(tmp);
+    ss=Temp;
     return 0;
 }

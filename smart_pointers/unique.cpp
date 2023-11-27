@@ -13,12 +13,16 @@ public:
         oth._p = nullptr;
     };
     ~UniquePtr(){
-        delete _p;
+        if(_p) delete _p;
     }
     UniquePtr(const UniquePtr & oth) = delete;
     UniquePtr & operator = (UniquePtr & oth) = delete;
     UniquePtr & operator = (UniquePtr<T> && oth){
-        std::swap(_p,oth._p);
+        if(_p==oth._p)
+            return *this;
+        this->~UniquePtr();
+        _p=oth._p;
+        oth._p=nullptr;
         return *this;
     };
     T& operator * (){
@@ -39,13 +43,14 @@ public:
         return tmp;
     }
     void reset(){
-        delete _p;
+        if(_p) delete _p;
         _p=nullptr;
     }
     void swap(UniquePtr &_ptr) {
         std::swap(_p, _ptr._p);
     }
     void reset(T *_ptr) {
+        if(_ptr==_p) return;
         UniquePtr<T>().swap(*this);
         _p = _ptr;
     }
@@ -60,7 +65,7 @@ UniquePtr <T> make_unique(A && ... a){
 }
 int main()
 {   
-    UniquePtr<std::string> ptr2 = make_unique<std::string>("hello world!");
-    std::cout<<*ptr2;
+    UniquePtr <int> a(new int(10));
+    a.reset(a.release());
     return 0;
 }
